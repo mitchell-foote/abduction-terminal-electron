@@ -4,6 +4,7 @@ import Terminal_Card_Change from '../assets/Terminal_Card_Change.mp3'
 import Terminal_Login_Fail from '../assets/Terminal_Login_Fail.mp3'
 import Terminal_Login_success from '../assets/Terminal_login_success.mp3'
 import Terminal_logout from '../assets/Terminal_logout.mp3'
+import Terminal_large_error from '../assets/Terminal_large_error.mp3'
 
 async function loadAudio(url: string) {
     const response = await fetch(url)
@@ -32,6 +33,9 @@ class AudioManager {
         loadAudio(Terminal_logout).then((audioBuffer) => {
             this.terminalLogoutBuffer = audioBuffer
         })
+        loadAudio(Terminal_large_error).then((audioBuffer) => {
+            this.terminalLargeErrorBuffer = audioBuffer
+        })
     }
     terminalTypeBuffer: AudioBuffer | undefined
     terminalDownloadBuffer: AudioBuffer | undefined
@@ -39,6 +43,7 @@ class AudioManager {
     terminalLoginFailBuffer: AudioBuffer | undefined
     terminalLoginSuccessBuffer: AudioBuffer | undefined
     terminalLogoutBuffer: AudioBuffer | undefined
+    terminalLargeErrorBuffer: AudioBuffer | undefined
 }
 
 const context = new AudioContext()
@@ -66,6 +71,10 @@ export function playTerminalLoginSuccessSound() {
 
 export function playTerminalLogoutSound() {
     audioManager.terminalLogoutBuffer && play(audioManager.terminalLogoutBuffer)
+}
+
+export function playTerminalLargeErrorSound() {
+    audioManager.terminalLargeErrorBuffer && play(audioManager.terminalLargeErrorBuffer)
 }
 
 function play(audioBuffer: AudioBuffer) {

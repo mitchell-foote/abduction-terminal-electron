@@ -9,7 +9,8 @@ import { ASCIIArt, GameDataInformation, TopLevelGameState } from '../types'
 import {
     playTerminalCardChangeSound,
     playTerminalLogoutSound,
-    playTerminalDownloadSound
+    playTerminalDownloadSound,
+    playTerminalLargeErrorSound
 } from '../helpers/audio_executors'
 
 export type AbductionTerminalProps = Types.GameComponentProps<GameDataInformation>
@@ -136,6 +137,8 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
                             { ...this.props.overallState, hasSystemCrashed: true },
                             () => {
                                 this.props.overallState.updateBackgroundAscii(ASCIIArt.HACKER)
+                                setInterval(() => playTerminalLargeErrorSound(), 9000)
+                                playTerminalLargeErrorSound()
                                 this.props.addLine([
                                     <LoadingHelper
                                         message="Crashing system..."
@@ -217,6 +220,7 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
                                                         startPercent={0}
                                                         endPercent={100}
                                                         onFinish={() => {
+                                                            playTerminalCardChangeSound()
                                                             this.props.writeText(
                                                                 {
                                                                     message:
@@ -234,6 +238,7 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
                                                                             color
                                                                             showPercent={true}
                                                                             onFinish={() => {
+                                                                                playTerminalCardChangeSound()
                                                                                 this.props.addLine(
                                                                                     [
                                                                                         'Access granted',
