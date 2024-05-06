@@ -19,3 +19,22 @@ export type ConfigFile = {
     researchData: ResearchData[]
     overrideCode: string
 }
+
+export type AvailableServer = {
+    name: string
+    url: string
+}
+
+export type AvailableFlight = {
+    id: string
+    name: string
+    simulator: {
+        id: string
+    }
+}
+
+export type ThoriumData = {
+    selectedServer: AvailableServer
+    selectedFlight: AvailableFlight
+    shipSystems: { id: string; type: string }[]
+}

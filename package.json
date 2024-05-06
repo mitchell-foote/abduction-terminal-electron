@@ -19,14 +19,20 @@
         "build:win": "npm run build && electron-builder --win",
         "build:mac": "electron-vite build && electron-builder --mac --universal",
         "build:linux": "electron-vite build && electron-builder --linux",
-        "deploy": "electron-builder --mac --universal --win --linux --publish always"
+        "deploy": "electron-vite build && electron-builder --mac --universal --publish always"
     },
     "dependencies": {
         "@electron-toolkit/preload": "^3.0.0",
         "@electron-toolkit/utils": "^3.0.0",
+        "@popperjs/core": "^2.11.8",
+        "@types/bonjour": "^3.5.13",
+        "@types/reactstrap": "^8.7.2",
+        "bonjour": "^3.5.0",
+        "bootstrap": "^5.3.3",
         "electron-updater": "^6.1.7",
         "html2canvas": "^1.4.1",
-        "react-ascii-text": "^0.0.4"
+        "react-ascii-text": "^0.0.4",
+        "reactstrap": "^9.2.2"
     },
     "devDependencies": {
         "@electron-toolkit/eslint-config-prettier": "^2.0.0",

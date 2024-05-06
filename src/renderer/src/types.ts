@@ -1,3 +1,5 @@
+import { ThoriumData } from 'src/shared/types'
+
 export interface Log {
     name: string
     description: string
@@ -33,6 +35,7 @@ export interface GameDataInformation {
     researchData: ResearchData[]
     onUpdateImageArea: (imgUrl?: string, callback?: () => void) => void
     updateBackgroundAscii: (ascii: ASCIIArt) => void
+    thoriumData?: ThoriumData
 }
 
 export enum ASCIIArt {

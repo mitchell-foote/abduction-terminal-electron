@@ -2,10 +2,18 @@ import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import fs from 'fs'
 import { ConfigFile } from '../shared/types'
-import { prepDefaultImageFiles, translateImagePaths } from './helpers'
+import {
+    getFlightSystems,
+    getFlights,
+    prepDefaultImageFiles,
+    sendLRM,
+    translateImagePaths
+} from './helpers'
+
 const CONFIG_FILE_DIRECTORY = process.env.HOME + '/Documents/abduction-terminal'
 const CONFIG_FILE_PATH = CONFIG_FILE_DIRECTORY + '/config.json'
 const ASSET_FOLDER = CONFIG_FILE_DIRECTORY + '/assets'
+
 // Custom APIs for renderer
 const api = {
     loadConfigFile: async (defaultState: ConfigFile): Promise<string> => {
@@ -35,6 +43,27 @@ const api = {
             fs.writeFileSync(CONFIG_FILE_PATH, fileData)
             return data
         }
+    },
+    getFlights: async (serverUri: string) => {
+        const flights = await getFlights(serverUri)
+        const newFlights = flights.map((flight) => {
+            return {
+                id: flight.id,
+                name: flight.name,
+                simulator: flight.simulators[0]
+            }
+        })
+        return newFlights
+    },
+    getFlightSystems: async (serverUri: string, simulatorId: string) => {
+        return await getFlightSystems(serverUri, simulatorId)
+    },
+    sendLRM: async (
+        serverUrl: string,
+        lrmSystemId: string,
+        LRM: { sender: string; crew: boolean; decoded: boolean; message: string }
+    ) => {
+        return await sendLRM(serverUrl, lrmSystemId, LRM)
     }
 }
 

@@ -3,8 +3,10 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { autoUpdater } from 'electron-updater'
+import { bonjourAPI } from '../preload/bonjour'
 
 function createWindow(): void {
+    bonjourAPI.start()
     // Create the browser window.
     const mainWindow = new BrowserWindow({
         width: 900,
@@ -91,6 +93,7 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
+    bonjourAPI.stop()
     if (process.platform !== 'darwin') {
         app.quit()
     }

@@ -12,6 +12,7 @@ import {
     playTerminalDownloadSound,
     playTerminalLargeErrorSound
 } from '../helpers/audio_executors'
+import { sendLRM } from '@renderer/thorium-connectors/executors'
 
 export type AbductionTerminalProps = Types.GameComponentProps<GameDataInformation>
 
@@ -430,6 +431,17 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
                                     showPercent={true}
                                     onFinish={() => {
                                         this.props.addLine(['Logs downloaded successfully'], () => {
+                                            this.props.overallState.thoriumData &&
+                                                sendLRM(this.props.overallState.thoriumData, {
+                                                    sender: 'Downloaded Logs',
+                                                    crew: true,
+                                                    decoded: true,
+                                                    message: this.props.overallState.logs
+                                                        .map(
+                                                            (log) => `${log.name} - ${log.message}`
+                                                        )
+                                                        .join('\n\n')
+                                                })
                                             this.setState({ gameState: TopLevelGameState.LOGS })
                                         })
                                     }}
@@ -477,6 +489,18 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
                                     this.props.addLine(
                                         ['Research data downloaded successfully'],
                                         () => {
+                                            this.props.overallState.thoriumData &&
+                                                sendLRM(this.props.overallState.thoriumData, {
+                                                    sender: 'Downloaded Research Data',
+                                                    crew: true,
+                                                    decoded: true,
+                                                    message: this.props.overallState.researchData
+                                                        .map(
+                                                            (research) =>
+                                                                `${research.name} - ${research.message}`
+                                                        )
+                                                        .join('\n\n')
+                                                })
                                             this.setState({ gameState: TopLevelGameState.RESEARCH })
                                         }
                                     )

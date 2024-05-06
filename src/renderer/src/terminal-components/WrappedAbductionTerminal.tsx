@@ -10,12 +10,14 @@ import HackerArt from '../ascii-art/HackerArt'
 import DatabaseAsciiArt from '../ascii-art/DatabaseArt'
 import LogsAsciiArt from '../ascii-art/LogsArt'
 import NetworkAsciiArt from '../ascii-art/NetworkArt'
+import { ThoriumData } from 'src/shared/types'
 interface WrappedAbductionTerminalProps {
     logs: Log[]
     researchData: ResearchData[]
     username: string
     password: string
     overrideCode: string
+    thoriumData?: ThoriumData
 }
 
 interface WrappedAbductionTerminalState {
@@ -43,7 +45,8 @@ export class WrappedAbductionTerminal extends React.Component<
                 onUpdateImageArea: this.updateImageArea,
                 updateBackgroundAscii: (ascii: ASCIIArt) => {
                     this.setState({ asciiArt: ascii })
-                }
+                },
+                thoriumData: this.props.thoriumData
             },
             asciiArt: ASCIIArt.NETWORK
         }
@@ -51,6 +54,7 @@ export class WrappedAbductionTerminal extends React.Component<
     state: WrappedAbductionTerminalState
 
     componentDidMount(): void {
+        window.electron.ipcRenderer.send('getServers')
         this.moveToLogin()
     }
 
@@ -143,7 +147,10 @@ export class WrappedAbductionTerminal extends React.Component<
                                             width: '100%',
                                             overflow: 'hidden',
                                             position: 'absolute',
-                                            top: 0,
+                                            top:
+                                                this.state.asciiArt === ASCIIArt.HACKER
+                                                    ? '25px'
+                                                    : 0,
                                             left: 0
                                         }}
                                     >
