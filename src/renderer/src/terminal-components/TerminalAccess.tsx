@@ -32,7 +32,7 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
         playTerminalCardChangeSound()
         this.setState({ gameState: TopLevelGameState.NO_STATE }, () => {
             setTimeout(() => {
-                this.props.addLine(['Starting terminal...'], () => {
+                this.props.addLine(['Starting Gamma level terminal...'], () => {
                     this.goToCommandLine()
                 })
             }, 3000)
@@ -47,7 +47,7 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
             if (fullText) {
                 this.props.writeText(
                     {
-                        message: `Command line ready, please type "help" for a list of available commands`
+                        message: `Gamma level command line ready, please type "help" for a list of available commands`
                     },
                     () => {
                         this.setState({ gameState: TopLevelGameState.TERMINAL })

@@ -45,14 +45,14 @@ class AbductionTerminalLogin extends React.Component<
         this.setState({ gameState: TopLevelGameState.NO_STATE }, () => {
             if (fast) {
                 this.props.addLine(
-                    [`Terminal interface active, please login...`, 'Username:'],
+                    [`Gamma level terminal interface active, please login...`, 'Username:'],
                     () => {
                         this.setState({ gameState: TopLevelGameState.LOGIN })
                     }
                 )
             } else {
                 this.props.writeText(
-                    { message: `Terminal interface active, please login...` },
+                    { message: `Gamma level terminal interface active, please login...` },
                     () => {
                         this.props.addLine(['Username:'], () => {
                             this.setState({ gameState: TopLevelGameState.LOGIN })
