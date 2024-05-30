@@ -402,11 +402,11 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
                 description: log.description,
                 action: () => {
                     if (log.restricted && !this.props.overallState.hasHackedAccount) {
-                        this.doAccessDenied(() => {})
+                        this.doAccessDenied(() => { })
                     } else {
                         this.props.addLine(
-                            ['-----------------', log.message, '-----------------'],
-                            () => {}
+                            ['-----------------', ...log.message.split('\n'), '-----------------'],
+                            () => { }
                         )
                     }
                 }
@@ -417,7 +417,7 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
             description: 'Download all logs',
             action: () => {
                 if (!this.props.overallState.hasHackedAccount) {
-                    this.doAccessDenied(() => {})
+                    this.doAccessDenied(() => { })
                 } else {
                     this.props.writeText({ message: 'Downloading logs...' }, () => {
                         playTerminalDownloadSound()
@@ -460,12 +460,12 @@ class AbductionTerminal extends React.Component<AbductionTerminalProps, Abductio
         this.props.overallState.researchData.forEach((research) => {
             researchArray.push({
                 name: research.name,
-                description: research.message,
+                description: research.description,
                 action: () => {
                     this.props.addLine(
-                        ['-----------------', research.message, '-----------------'],
+                        ['-----------------', ...research.message.split('\n'), '-----------------'],
                         () => {
-                            this.props.overallState.onUpdateImageArea(research.imageUrl, () => {})
+                            this.props.overallState.onUpdateImageArea(research.imageUrl, () => { })
                         }
                     )
                 }
